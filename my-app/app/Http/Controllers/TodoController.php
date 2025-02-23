@@ -52,4 +52,56 @@ class TodoController extends Controller
         }
     }
 
+    public function edit(Todo $todo)
+    {
+        if (!Auth::check()) {
+            return redirect(route('login'));
+        }
+
+        if ($todo->user_id !== Auth::id()) {
+            return redirect(route('todo.home'));
+        }
+
+        return view('todos.edit', ['todo' => $todo]);
+    }
+    
+    public function update(Request $request, Todo $todo)
+    {
+        if (!Auth::check()) {
+            return redirect(route('login'));
+        }
+
+        if ($todo->user_id !== Auth::id()) {
+            return redirect(route('todo.home'));
+        }
+
+        try {
+            $todo->completedTodo($todo);
+
+            return redirect()->route('todo.home');
+
+        } catch (\Exception $e) {
+            return back()->withInput()->withErrors(['error' => $e->getMessage()]);
+        }
+    }
+
+    public function destroy(Todo $todo)
+    {
+        if (!Auth::check()) {
+            return redirect(route('login'));
+        }
+
+        if ($todo->user_id !== Auth::id()) {
+            return redirect(route('todo.home'));
+        }
+
+        try {
+            $todo->delete();
+
+            return redirect()->route('todo.home');
+
+        } catch (\Exception $e) {
+            return back()->withInput()->withErrors(['error' => $e->getMessage()]);
+        }
+    }
 }

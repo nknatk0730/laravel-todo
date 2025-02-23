@@ -24,7 +24,7 @@
     @csrf
     <input class="p-1 border rounded" type="text" name="title" placeholder="Title">
     <textarea class="p-1 border rounded" name="description" placeholder="Description"></textarea>
-    <input class="p-1 border rounded bg-sky-400 hover:bg-sky-600" type="submit" value="Create">
+    <input class="hover:cursor-pointer p-1 border rounded bg-sky-400 hover:bg-sky-600" type="submit" value="Create">
   </form>
   {{-- errors --}}
   @if ($errors->any())

@@ -26,4 +26,10 @@ class Todo extends Model
             'user_id' => Auth::id(),
         ]);
     }
+
+    public function completedTodo($todo)
+    {
+        $todo->completed = !$todo->completed;
+        $todo->save();
+    }
 }
